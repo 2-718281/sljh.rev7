@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="crossorigin" />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@200;300;400&display=swap" rel="stylesheet" />
+<style>
+html,body{margin:0;padding:0;background:#080808;}
+a{color:#dcdcdc;}a:hover{color:#fff;}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes slowIn{from{opacity:0}to{opacity:1}}
+@keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+@keyframes glitchShift{
+0%{transform:translate(0,0);filter:none;opacity:1}
+8%{transform:translate(-3%,1%) scaleY(1.02);filter:invert(1) contrast(2)}
+14%{transform:translate(4%,-2%);filter:none}
+22%{transform:translate(0,0);filter:brightness(4) saturate(0)}
+30%{transform:translate(-6%,0) skewX(4deg);filter:invert(1)}
+38%{transform:translate(2%,3%);filter:none}
+50%{transform:translate(0,0);filter:brightness(6)}
+62%{transform:translate(5%,-1%) skewX(-6deg);filter:invert(1) hue-rotate(180deg)}
+74%{transform:translate(-2%,0);filter:none}
+86%{transform:translate(0,0);filter:brightness(0.1)}
+100%{transform:translate(0,0);filter:brightness(0)}
+}
+@keyframes glitchBars{
+0%,100%{opacity:0}
+10%{opacity:.9;transform:translateY(-14%)}
+26%{opacity:.2;transform:translateY(22%)}
+44%{opacity:.85;transform:translateY(-6%)}
+60%{opacity:.1;transform:translateY(38%)}
+80%{opacity:.6;transform:translateY(8%)}
+}
+@keyframes blueFlash{
+0%{opacity:0}
+6%{opacity:1}
+12%{opacity:0}
+20%{opacity:1}
+26%{opacity:.1}
+34%{opacity:1}
+100%{opacity:1}
+}
+@keyframes invertOut{
+0%{filter:none;opacity:1}
+30%{filter:invert(1) brightness(1.6);opacity:1}
+55%{filter:invert(1) brightness(3);opacity:1}
+70%{filter:brightness(8) saturate(0);opacity:1}
+100%{filter:brightness(12) saturate(0);opacity:0}
+}
+@keyframes whiteBurst{0%{opacity:0}18%{opacity:1}100%{opacity:0}}
+@keyframes ripple{
+0%{transform:scale(.25);opacity:0}
+14%{opacity:.85}
+100%{transform:scale(1.9);opacity:0}
+}
+@keyframes rollBar{0%{transform:translateY(-30%)}100%{transform:translateY(130%)}}
+@keyframes jitter{0%,100%{transform:translate(0,0)}25%{transform:translate(-0.5%,0.3%)}50%{transform:translate(0.6%,-0.2%)}75%{transform:translate(-0.2%,-0.5%)}}
+@keyframes shakeS{0%,100%{transform:translate(0,0)}33%{transform:translate(-0.6px,0.4px)}66%{transform:translate(0.5px,-0.3px)}}
+@keyframes shakeM{0%,100%{transform:translate(0,0)}20%{transform:translate(-1.4px,0.8px)}45%{transform:translate(1.2px,-0.9px)}70%{transform:translate(-0.7px,-1.1px)}}
+@keyframes shakeL{0%,100%{transform:translate(0,0) rotate(0deg)}15%{transform:translate(-2.6px,1.4px) rotate(-0.25deg)}35%{transform:translate(2.4px,-1.8px) rotate(0.3deg)}55%{transform:translate(-1.8px,-2.2px) rotate(-0.2deg)}80%{transform:translate(2px,1.6px) rotate(0.25deg)}}
+@keyframes shakeXL{0%,100%{transform:translate(0,0) rotate(0deg)}10%{transform:translate(-4.5px,2.5px) rotate(-0.5deg)}28%{transform:translate(4.2px,-3.2px) rotate(0.6deg)}46%{transform:translate(-3.4px,-4px) rotate(-0.45deg)}64%{transform:translate(3.8px,3px) rotate(0.5deg)}82%{transform:translate(-2.4px,1.2px) rotate(-0.3deg)}}
+@keyframes flickerOp{0%,100%{opacity:.18}40%{opacity:.4}70%{opacity:.1}}
+input::placeholder{color:rgba(255,255,255,0.22);}
+</style>
+</helmet>
+<div style="width:100%;min-height:100vh;background:#080808;display:flex;align-items:center;justify-content:center;font-family:'Noto Sans SC',sans-serif;overflow:hidden">
+  <div style="position:relative;width:min(100vw,56.25vh);height:min(177.78vw,100vh);overflow:hidden;background:#111">
+
+    <sc-if value="{{ isLogin }}" hint-placeholder-val="{{ true }}">
+      <div style="position:absolute;inset:0;animation:fadeIn 900ms ease both">
+        <img src="uploads/封面.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" />
+        <div style="position:absolute;left:24%;right:24%;top:31%;display:flex;flex-direction:column;gap:3vh;color:#e9e9e9">
+          <div style="display:flex;flex-direction:column;gap:1vh;font-size:clamp(12px,1.95vh,24px);letter-spacing:0.4em;font-weight:300">
+            <div style="opacity:.72">Rev.7</div>
+            <div>招募问卷废案</div>
+          </div>
+          <div style="display:flex;align-items:baseline;gap:0.8em;font-size:clamp(12px,1.95vh,24px);letter-spacing:0.4em;font-weight:300">
+            <span>密码</span>
+            <input type="password" value="{{ pw }}" onChange="{{ onPw }}" onKeyDown="{{ onKey }}" autoFocus="{{ true }}" style="flex:1;min-width:0;background:transparent;border:0;border-bottom:1px solid rgba(255,255,255,0.6);outline:none;color:#fff;font-family:inherit;font-size:inherit;letter-spacing:0.4em;padding:0 0 0.35em 0" />
+          </div>
+          <div style="display:flex;align-items:center;gap:1.4em;margin-top:0.4vh">
+            <button onClick="{{ submit }}" style="background:transparent;border:1px solid rgba(255,255,255,0.5);color:#e9e9e9;font-family:inherit;font-size:clamp(11px,1.55vh,19px);letter-spacing:0.35em;padding:0.7em 1.5em 0.7em 1.85em;cursor:pointer;transition:all 200ms" style-hover="background:rgba(255,255,255,0.12);border-color:#fff">开启</button>
+            <sc-if value="{{ err }}" hint-placeholder-val="{{ false }}">
+              <span style="color:#a8a8a8;font-size:clamp(10px,1.4vh,17px);letter-spacing:0.2em;animation:fadeIn 300ms both">密码不符</span>
+            </sc-if>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isLetter }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;inset:0;animation:fadeIn 1100ms ease both">
+        <div style="{{ frameShake }}">
+          <img src="uploads/开封.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" />
+        </div>
+        <sc-if value="{{ decayOn }}" hint-placeholder-val="{{ false }}">
+          <canvas ref="{{ noiseRef }}" width="440" height="780" style="{{ decayNoise }}"></canvas>
+          <div style="{{ decayLines }}"></div>
+        </sc-if>
+        <div style="position:absolute;left:26%;right:24%;top:37%;bottom:26%;display:flex;flex-direction:column;color:#efefef">
+          <sc-if value="{{ isQ }}" hint-placeholder-val="{{ false }}">
+            <div style="font-size:clamp(9px,1.25vh,15px);letter-spacing:0.4em;color:rgba(255,255,255,0.4);margin-bottom:2.2vh">{{ counter }}</div>
+          </sc-if>
+          <div style="font-size:clamp(11px,1.75vh,22px);line-height:2.15;letter-spacing:0.05em;white-space:pre-wrap;font-weight:300;text-wrap:pretty">{{ typed }}<span style="display:inline-block;width:0.55em;animation:blink 900ms step-end infinite">_</span></div>
+          <div style="flex:1"></div>
+          <sc-if value="{{ showIntroBtn }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;animation:fadeIn 700ms both">
+              <button onClick="{{ begin }}" style="background:transparent;border:1px solid rgba(255,255,255,0.5);color:#efefef;font-family:inherit;font-size:clamp(11px,1.55vh,19px);letter-spacing:0.35em;padding:0.75em 1.4em 0.75em 1.75em;cursor:pointer;transition:all 200ms" style-hover="background:rgba(255,255,255,0.13);border-color:#fff">开始</button>
+            </div>
+          </sc-if>
+          <sc-if value="{{ showChoices }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;gap:1.2em;animation:fadeIn 700ms both">
+              <div style="{{ btnShakeA }}">
+                <button onClick="{{ agree }}" style="width:100%;background:transparent;border:1px solid rgba(255,255,255,0.5);color:#efefef;font-family:inherit;font-size:clamp(11px,1.55vh,19px);letter-spacing:0.3em;padding:0.85em 0 0.85em 0.3em;cursor:pointer;transition:all 200ms" style-hover="background:rgba(255,255,255,0.14);border-color:#fff">同意</button>
+              </div>
+              <div style="{{ btnShakeB }}">
+                <button onClick="{{ oppose }}" style="width:100%;background:transparent;border:1px solid rgba(255,255,255,0.5);color:#efefef;font-family:inherit;font-size:clamp(11px,1.55vh,19px);letter-spacing:0.3em;padding:0.85em 0 0.85em 0.3em;cursor:pointer;transition:all 200ms" style-hover="background:rgba(255,255,255,0.14);border-color:#fff">反对</button>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isGlitch }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;inset:0;background:#000;overflow:hidden">
+        <img src="uploads/开封.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;animation:glitchShift 900ms steps(1,end) both" />
+        <div style="position:absolute;left:-10%;right:-10%;top:0;height:22%;background:repeating-linear-gradient(0deg,rgba(255,255,255,.75) 0 2px,rgba(0,0,0,0) 2px 5px);mix-blend-mode:screen;animation:glitchBars 900ms steps(1,end) both"></div>
+        <div style="position:absolute;left:-10%;right:-10%;top:45%;height:14%;background:repeating-linear-gradient(0deg,rgba(255,255,255,.55) 0 1px,rgba(0,0,0,0) 1px 4px);mix-blend-mode:screen;animation:glitchBars 700ms steps(1,end) both;animation-delay:120ms"></div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isBlackText }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;inset:0;background:#000;display:flex;align-items:center;justify-content:center;padding:0 13%;animation:fadeIn 900ms ease both">
+        <div style="color:#f2f2f2;font-size:clamp(12px,1.9vh,23px);line-height:2.1;letter-spacing:0.07em;text-align:center;font-weight:300;white-space:pre-wrap">{{ typed }}<span style="display:inline-block;width:0.55em;animation:blink 900ms step-end infinite">_</span></div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isSnow }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;inset:0;background:#000;overflow:hidden;animation:fadeIn 220ms both">
+        <canvas ref="{{ snowRef }}" width="180" height="320" style="position:absolute;inset:0;width:100%;height:100%;image-rendering:pixelated;opacity:.92"></canvas>
+        <div style="position:absolute;left:0;right:0;height:16%;background:linear-gradient(180deg,rgba(255,255,255,0) 0%,rgba(255,255,255,.22) 50%,rgba(255,255,255,0) 100%);animation:rollBar 1.6s linear infinite"></div>
+        <div style="position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,.45) 0 1px,rgba(0,0,0,0) 1px 3px)"></div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isBlackout }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;inset:0;background:#000">
+        <img src="uploads/黑屏.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" />
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isBlueFlash }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;inset:0;background:#000;overflow:hidden">
+        <img src="uploads/蓝色的船背景.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;animation:blueFlash 1200ms steps(1,end) both" />
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isBlueText }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;inset:0;background:#1b1bd8;overflow:hidden">
+        <img src="uploads/蓝色的船背景.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" />
+        <div style="position:absolute;left:8%;right:8%;top:42.6%;display:flex;justify-content:center;align-items:baseline;color:#fff;font-size:clamp(14px,2.25vh,28px);font-weight:300;letter-spacing:0.04em">
+          <span style="white-space:pre">{{ typed }}</span><span style="display:inline-block;width:0.5em;animation:blink 900ms step-end infinite">_</span>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isInvert }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;inset:0;background:#fff;overflow:hidden">
+        <div style="position:absolute;inset:0;animation:invertOut 700ms ease-in both">
+          <img src="uploads/蓝色的船背景.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" />
+          <div style="position:absolute;left:8%;right:8%;top:42.6%;display:flex;justify-content:center;color:#fff;font-size:clamp(14px,2.25vh,28px);font-weight:300;letter-spacing:0.04em">Bene venisti domum!</div>
+        </div>
+        <div style="position:absolute;inset:0;background:#fff;animation:whiteBurst 700ms ease-in both"></div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isWhite }}" hint-placeholder-val="{{ false }}">
+      <div onClick="{{ restart }}" style="position:absolute;inset:0;background:#efefee;cursor:pointer;overflow:hidden;animation:slowIn 1400ms ease both">
+        <img src="uploads/白色的船效果.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" />
+        <div style="position:absolute;left:50%;top:28.6%;width:26%;aspect-ratio:1;margin-left:-13%;margin-top:-13%;border:1px solid rgba(40,40,40,.55);border-radius:50%;animation:ripple 5.5s ease-out infinite"></div>
+        <div style="position:absolute;left:50%;top:28.6%;width:26%;aspect-ratio:1;margin-left:-13%;margin-top:-13%;border:1px solid rgba(40,40,40,.4);border-radius:50%;animation:ripple 5.5s ease-out infinite;animation-delay:1.8s"></div>
+        <div style="position:absolute;left:46.3%;top:52.6%;width:94%;aspect-ratio:1;margin-left:-47%;margin-top:-47%;border:1px solid rgba(40,40,40,.4);border-radius:50%;animation:ripple 8s ease-out infinite"></div>
+        <div style="position:absolute;left:46.3%;top:52.6%;width:94%;aspect-ratio:1;margin-left:-47%;margin-top:-47%;border:1px solid rgba(40,40,40,.28);border-radius:50%;animation:ripple 8s ease-out infinite;animation-delay:3.2s"></div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isBlackShip }}" hint-placeholder-val="{{ false }}">
+      <div onClick="{{ restart }}" style="position:absolute;inset:0;background:#000;cursor:pointer;overflow:hidden;animation:slowIn 1600ms ease both">
+        <img src="uploads/黑色的船.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;animation:jitter 3.4s steps(4,end) infinite" />
+        <canvas ref="{{ noiseRef }}" width="180" height="320" style="position:absolute;inset:0;width:100%;height:100%;image-rendering:pixelated;mix-blend-mode:screen;animation:flickerOp 2.6s ease-in-out infinite"></canvas>
+        <div style="position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,.5) 0 1px,rgba(0,0,0,0) 1px 3px);pointer-events:none"></div>
+        <div style="position:absolute;left:0;right:0;height:10%;background:linear-gradient(180deg,rgba(255,255,255,0) 0%,rgba(255,255,255,.1) 50%,rgba(255,255,255,0) 100%);animation:rollBar 4.2s linear infinite;pointer-events:none"></div>
+      </div>
+    </sc-if>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;password&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;signa&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;typeSpeed&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:85,&quot;min&quot;:20,&quot;max&quot;:200,&quot;step&quot;:5,&quot;unit&quot;:&quot;ms&quot;,&quot;tsType&quot;:&quot;number&quot;},&quot;blueThreshold&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:5,&quot;min&quot;:1,&quot;max&quot;:10,&quot;tsType&quot;:&quot;number&quot;},&quot;volume&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:60,&quot;min&quot;:0,&quot;max&quot;:100,&quot;step&quot;:5,&quot;unit&quot;:&quot;%&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;声音&quot;},&quot;muted&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;声音&quot;},&quot;morseUnit&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:60,&quot;min&quot;:30,&quot;max&quot;:160,&quot;step&quot;:5,&quot;unit&quot;:&quot;ms&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;声音&quot;},&quot;morseUnitLong&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:50,&quot;min&quot;:25,&quot;max&quot;:140,&quot;step&quot;:5,&quot;unit&quot;:&quot;ms&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;声音&quot;}}">
+class Component extends DCLogic {
+  state = { screen: 'login', pw: '', err: false, qi: 0, yes: 0, no: 0, typed: '', done: false };
+  snowRef = React.createRef();
+  noiseRef = React.createRef();
+
+  QS = [
+    '你对一个充满分歧的个体社会感到厌恶。',
+    '完全和谐、没有冲突的集体意识比充满分歧的个体社会更“完美”。',
+    '抛下同伴独自逃生是一种不可饶恕的罪。',
+    '会伤害他人的真相应该被隐瞒。',
+    '你会因为他人将自认为正确的未来强加给你而憎恨。',
+    '你愿为不可能的希望拼尽全力。',
+    '“自我”是一组连续感知的集合，而非某个固定不变的灵魂实体。',
+    '“家”是一段记忆或一种情感状态，而非一个物理坐标。',
+    '我们可以一起“回家”。',
+    '对该问卷你如实表达了你的想法。'
+  ];
+  INTRO = '这是一份用于了解你是否适合于我们同行的问卷，\n你只需要用“是”或“否”来表达你的看法。';
+  FOG = '迷雾将我们分隔，\n我们从未真正对话过。';
+  HOME = 'Bene venisti domum!';
+
+  audio() {
+    if (this._ac) return this._ac;
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return null;
+    const ac = new AC();
+    const master = ac.createGain();
+    master.gain.value = (this.props.volume ?? 60) / 100;
+    master.connect(ac.destination);
+    this._ac = ac; this._master = master;
+    return ac;
+  }
+
+  noiseBuffer(ac) {
+    if (this._nb) return this._nb;
+    const b = ac.createBuffer(1, ac.sampleRate * 2, ac.sampleRate);
+    const d = b.getChannelData(0);
+    for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+    this._nb = b;
+    return b;
+  }
+
+  MORSE = {
+    a: '.-', b: '-...', c: '-.-.', d: '-..', e: '.', f: '..-.', g: '--.', h: '....',
+    i: '..', j: '.---', k: '-.-', l: '.-..', m: '--', n: '-.', o: '---', p: '.--.',
+    q: '--.-', r: '.-.', s: '...', t: '-', u: '..-', v: '...-', w: '.--', x: '-..-',
+    y: '-.--', z: '--..', 0: '-----', 1: '.----', 2: '..---', 3: '...--', 4: '....-',
+    5: '.....', 6: '-....', 7: '--...', 8: '---..', 9: '----.',
+    '.': '.-.-.-', ',': '--..--', '?': '..--..', "'": '.----.', '!': '-.-.--',
+    '/': '-..-.', '-': '-....-', ':': '---...', ';': '-.-.-.', '=': '-...-'
+  };
+
+  MORSE_WORDS = 'We have no need of other worlds. We need mirrors.'.split(' ');
+  MORSE_FOG = "What gave you this idea of an imperfect god?";
+  MORSE_BLACK = "How do you expect to communicate with the ocean, when you can't even understand one another?";
+  MORSE_WHITE = 'Not a single start relieved the darkness behind the glass.';
+
+  stopMorse() {
+    if (this._morse) { this._morse.forEach(n => { try { n.stop(); } catch (e) {} }); }
+    this._morse = [];
+  }
+
+  // Standard timing: dot = 1u, dash = 3u, intra-char 1u, inter-char 3u, inter-word 7u
+  playMorse(text, delay, voice) {
+    const ac = this.audio(); if (!ac || this.props.muted) { this._morseDur = 0; return 0; }
+    if (ac.state === 'suspended') ac.resume();
+    this.stopMorse();
+    const radio = voice === 'radio';
+    const u = ((radio ? (this.props.morseUnitLong ?? 50) : (this.props.morseUnit ?? 60))) / 1000;
+    const t0 = ac.currentTime + (delay || 0);
+    let t = t0;
+    const nodes = [];
+    const beep = (len) => {
+      if (radio) {
+        // single low shortwave voice — one tone per symbol, no doubling
+        const o = ac.createOscillator(); o.type = 'square'; o.frequency.value = 430;
+        const bp = ac.createBiquadFilter(); bp.type = 'lowpass'; bp.frequency.value = 900;
+        const g = ac.createGain();
+        g.gain.setValueAtTime(0.0001, t);
+        g.gain.linearRampToValueAtTime(0.075, t + 0.008);
+        g.gain.setValueAtTime(0.075, t + len - 0.008);
+        g.gain.exponentialRampToValueAtTime(0.0001, t + len);
+        o.connect(bp); bp.connect(g); g.connect(this._master);
+        o.start(t); o.stop(t + len + 0.01);
+        nodes.push(o);
+      } else {
+        const o = ac.createOscillator(); o.type = 'sine'; o.frequency.value = 700;
+        const g = ac.createGain();
+        g.gain.setValueAtTime(0.0001, t);
+        g.gain.linearRampToValueAtTime(0.09, t + 0.005);
+        g.gain.setValueAtTime(0.09, t + len - 0.005);
+        g.gain.exponentialRampToValueAtTime(0.0001, t + len);
+        o.connect(g); g.connect(this._master);
+        o.start(t); o.stop(t + len + 0.01);
+        nodes.push(o);
+      }
+      t += len + u;
+    };
+    const words = String(text).toLowerCase().split(/\s+/);
+    words.forEach((w, wi) => {
+      const chars = w.split('');
+      chars.forEach((c, ci) => {
+        const code = this.MORSE[c];
+        if (!code) return;
+        code.split('').forEach(sym => beep(sym === '-' ? u * 3 : u));
+        if (ci < chars.length - 1) t += u * 2; // total 3u between characters
+      });
+      if (wi < words.length - 1) t += u * 4; // total 7u between words
+    });
+    this._morse = nodes;
+    this._morseDur = (delay || 0) + (t - t0);
+    return this._morseDur;
+  }
+
+  waves(level) {
+    const ac = this.audio(); if (!ac) return;
+    if (this.props.muted) { if (this._wave) this._wave.g.gain.setTargetAtTime(0, ac.currentTime, 0.4); return; }
+    if (ac.state === 'suspended') ac.resume();
+    if (!this._wave) {
+      const n = ac.createBufferSource();
+      n.buffer = this.noiseBuffer(ac); n.loop = true;
+      const bp = ac.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 620; bp.Q.value = 0.55;
+      const swell = ac.createGain(); swell.gain.value = 0.55;
+      const g = ac.createGain(); g.gain.value = 0;
+      // two slow LFOs give an irregular surf swell
+      [0.085, 0.037].forEach((f, i) => {
+        const lfo = ac.createOscillator(); lfo.type = 'sine'; lfo.frequency.value = f;
+        const lg = ac.createGain(); lg.gain.value = i ? 0.3 : 0.45;
+        lfo.connect(lg); lg.connect(swell.gain); lfo.start();
+      });
+      const fl = ac.createOscillator(); fl.type = 'sine'; fl.frequency.value = 0.06;
+      const flg = ac.createGain(); flg.gain.value = 240;
+      fl.connect(flg); flg.connect(bp.frequency); fl.start();
+      n.connect(bp); bp.connect(swell); swell.connect(g); g.connect(this._master);
+      n.start();
+      this._wave = { src: n, g };
+    }
+    this._wave.g.gain.setTargetAtTime(level, ac.currentTime, 2.5);
+  }
+
+  stopWaves() {
+    if (!this._wave || !this._ac) return;
+    this._wave.g.gain.setTargetAtTime(0, this._ac.currentTime, 0.9);
+  }
+
+  stopBed() {
+    if (!this._bed) return;
+    const ac = this._ac;
+    this._bed.forEach(n => {
+      try { n.gain.gain.cancelScheduledValues(ac.currentTime); n.gain.gain.setTargetAtTime(0, ac.currentTime, 0.25); } catch (e) {}
+      try { setTimeout(() => n.src.stop(), 1200); } catch (e) {}
+    });
+    this._bed = null;
+  }
+
+  // kind: 'hum' | 'snow' | 'interference' | 'chime'
+  bed(kind) {
+    const ac = this.audio(); if (!ac) return;
+    if (this._bedKind === kind) return;
+    this._bedKind = kind;
+    this.stopBed();
+    if (ac.state === 'suspended') ac.resume();
+    const nodes = [];
+    const add = (src, gain) => { src.connect(gain); nodes.push({ src, gain }); src.start(); };
+
+    if (kind === 'hum' || kind === 'chime') {
+      [55, 82.5, 110].forEach((f, i) => {
+        const o = ac.createOscillator();
+        o.type = 'sine'; o.frequency.value = f;
+        const lfo = ac.createOscillator(); lfo.frequency.value = 0.07 + i * 0.03;
+        const lg = ac.createGain(); lg.gain.value = f * 0.004;
+        lfo.connect(lg); lg.connect(o.frequency); lfo.start();
+        const g = ac.createGain(); g.gain.value = 0;
+        g.gain.setTargetAtTime(kind === 'chime' ? 0.1 : 0.07, ac.currentTime, 1.6);
+        g.connect(this._master);
+        add(o, g);
+      });
+      const n = ac.createBufferSource();
+      n.buffer = this.noiseBuffer(ac); n.loop = true;
+      const bp = ac.createBiquadFilter(); bp.type = 'lowpass'; bp.frequency.value = 340;
+      const g = ac.createGain(); g.gain.value = 0;
+      g.gain.setTargetAtTime(0.05, ac.currentTime, 2.2);
+      n.connect(bp); bp.connect(g); g.connect(this._master);
+      nodes.push({ src: n, gain: g }); n.start();
+    }
+
+    if (kind === 'snow' || kind === 'interference') {
+      const n = ac.createBufferSource();
+      n.buffer = this.noiseBuffer(ac); n.loop = true;
+      const hp = ac.createBiquadFilter();
+      hp.type = kind === 'snow' ? 'highpass' : 'bandpass';
+      hp.frequency.value = kind === 'snow' ? 900 : 1500;
+      hp.Q.value = 0.8;
+      const g = ac.createGain(); g.gain.value = 0;
+      g.gain.setTargetAtTime(kind === 'snow' ? 0.3 : 0.075, ac.currentTime, 0.12);
+      n.connect(hp); hp.connect(g); g.connect(this._master);
+      nodes.push({ src: n, gain: g }); n.start();
+      if (kind === 'interference') {
+        const o = ac.createOscillator(); o.type = 'sawtooth'; o.frequency.value = 62;
+        const og = ac.createGain(); og.gain.value = 0.02;
+        const sweep = ac.createOscillator(); sweep.type = 'sine'; sweep.frequency.value = 0.11;
+        const sg = ac.createGain(); sg.gain.value = 0.02;
+        sweep.connect(sg); sg.connect(og.gain); sweep.start();
+        o.connect(og); og.connect(this._master);
+        nodes.push({ src: o, gain: og }); o.start();
+      }
+    }
+
+    this._bed = nodes;
+  }
+
+  sfx(kind) {
+    if (this.props.muted) return;
+    const ac = this.audio(); if (!ac) return;
+    if (ac.state === 'suspended') ac.resume();
+    const t = ac.currentTime;
+    if (kind === 'type') {
+      // crisp typewriter strike: click transient + tiny metallic ping
+      const n = ac.createBufferSource(); n.buffer = this.noiseBuffer(ac);
+      n.playbackRate.value = 1 + Math.random() * 0.4;
+      const hp = ac.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 2400;
+      const g = ac.createGain();
+      g.gain.setValueAtTime(0.1, t);
+      g.gain.exponentialRampToValueAtTime(0.0006, t + 0.028);
+      n.connect(hp); hp.connect(g); g.connect(this._master);
+      n.start(t); n.stop(t + 0.04);
+      const o = ac.createOscillator(); o.type = 'triangle';
+      o.frequency.value = 2900 + Math.random() * 700;
+      const og = ac.createGain();
+      og.gain.setValueAtTime(0.03, t);
+      og.gain.exponentialRampToValueAtTime(0.0004, t + 0.035);
+      o.connect(og); og.connect(this._master);
+      o.start(t); o.stop(t + 0.05);
+    }
+    if (kind === 'error') {
+      const o = ac.createOscillator(); o.type = 'square'; o.frequency.value = 96;
+      const g = ac.createGain();
+      g.gain.setValueAtTime(0.09, t); g.gain.exponentialRampToValueAtTime(0.0008, t + 0.22);
+      o.connect(g); g.connect(this._master); o.start(t); o.stop(t + 0.24);
+    }
+    if (kind === 'glitch') {
+      // 刺啦刺啦: bright noise gated in fast ragged stutters, like tape/static being torn
+      const rips = [
+        { at: 0.00, len: 0.30 },
+        { at: 0.38, len: 0.16 },
+        { at: 0.62, len: 0.42 },
+        { at: 1.14, len: 0.22 }
+      ];
+      rips.forEach(r => {
+        const s = t + r.at;
+        const n = ac.createBufferSource();
+        n.buffer = this.noiseBuffer(ac);
+        n.playbackRate.value = 0.85 + Math.random() * 0.5;
+        const hp = ac.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 1100;
+        const bp = ac.createBiquadFilter(); bp.type = 'bandpass'; bp.Q.value = 1.1;
+        bp.frequency.setValueAtTime(2600 + Math.random() * 1800, s);
+        bp.frequency.linearRampToValueAtTime(1400 + Math.random() * 1200, s + r.len);
+        const g = ac.createGain();
+        g.gain.setValueAtTime(0.0001, s);
+        // ragged gating = the 刺啦 texture
+        let x = 0;
+        while (x < r.len) {
+          const on = 0.006 + Math.random() * 0.014;
+          const off = 0.004 + Math.random() * 0.012;
+          g.gain.setValueAtTime(0.16 + Math.random() * 0.16, s + x);
+          g.gain.setValueAtTime(0.008, s + x + on);
+          x += on + off;
+        }
+        g.gain.setValueAtTime(0.0001, s + r.len);
+        n.connect(hp); hp.connect(bp); bp.connect(g); g.connect(this._master);
+        n.start(s); n.stop(s + r.len + 0.05);
+      });
+    }
+    if (kind === 'flash') {
+      const o = ac.createOscillator(); o.type = 'sawtooth';
+      o.frequency.setValueAtTime(1400, t); o.frequency.exponentialRampToValueAtTime(140, t + 0.5);
+      const g = ac.createGain();
+      g.gain.setValueAtTime(0.14, t); g.gain.exponentialRampToValueAtTime(0.001, t + 0.55);
+      o.connect(g); g.connect(this._master); o.start(t); o.stop(t + 0.6);
+    }
+    if (kind === 'burst') {
+      const n = ac.createBufferSource(); n.buffer = this.noiseBuffer(ac);
+      const f = ac.createBiquadFilter(); f.type = 'lowpass';
+      f.frequency.setValueAtTime(400, t); f.frequency.exponentialRampToValueAtTime(9000, t + 0.5);
+      const g = ac.createGain();
+      g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.3, t + 0.45);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 1.6);
+      n.connect(f); f.connect(g); g.connect(this._master);
+      n.start(t); n.stop(t + 1.7);
+    }
+    if (kind === 'ripple') {
+      [523.25, 784, 1046.5].forEach((f, i) => {
+        const s = t + i * 0.42;
+        const o = ac.createOscillator(); o.type = 'sine'; o.frequency.value = f;
+        const g = ac.createGain();
+        g.gain.setValueAtTime(0.0001, s);
+        g.gain.exponentialRampToValueAtTime(0.09, s + 0.12);
+        g.gain.exponentialRampToValueAtTime(0.0005, s + 3.4);
+        o.connect(g); g.connect(this._master); o.start(s); o.stop(s + 3.6);
+      });
+    }
+  }
+
+  type(text, after, sound) {
+    this._typeSound = sound || null;
+    clearInterval(this._t); clearTimeout(this._a);
+    this.setState({ typed: '', done: false });
+    let i = 0;
+    const speed = this.props.typeSpeed ?? 85;
+    this._t = setInterval(() => {
+      i++;
+      const ch = text[i - 1];
+      if (this._typeSound && ch !== '\n' && ch !== ' ') this.sfx(this._typeSound);
+      this.setState({ typed: text.slice(0, i) });
+      if (i >= text.length) {
+        clearInterval(this._t);
+        this.setState({ done: true });
+        if (after) this._a = setTimeout(after, 1900);
+      }
+    }, speed);
+  }
+
+  BEDS = { login: 'hum', intro: 'hum', q: 'hum', glitch: 'interference', blacktext: 'interference', snow: 'snow', blackout: null, blueflash: 'chime', bluetext: 'chime', invert: 'chime', white: 'chime', blackship: 'interference' };
+  CUES = { glitch: 'glitch', snow: null, invert: 'burst' };
+
+  go(screen, ms, next) {
+    clearTimeout(this._s);
+    this.setState({ screen });
+    this.scene(screen);
+    if (next) this._s = setTimeout(next, ms);
+  }
+
+  scene(screen) {
+    if (this.props.muted) { this.stopBed(); this.stopWaves(); this.stopMorse(); this._bedKind = null; return; }
+    const bed = this.BEDS[screen];
+    if (bed) this.bed(bed); else { this.stopBed(); this._bedKind = null; }
+    const cue = this.CUES[screen];
+    if (cue) this.sfx(cue);
+    if (screen === 'blacktext') this.playMorse(this.MORSE_FOG, 0, 'radio');
+    else if (screen === 'blackship') this.playMorse(this.MORSE_BLACK, 1.6, 'radio');
+    else if (screen === 'white') this.playMorse(this.MORSE_WHITE, 1.6, 'radio');
+    else if (screen !== 'q') this.stopMorse();
+    if (screen === 'q') {
+      const p = this.state.qi / (this.QS.length - 1);
+      this.waves(0.06 + p * 0.5);
+      this.playMorse(this.MORSE_WORDS[this.state.qi] || '', 0.6);
+    } else if (screen === 'white' || screen === 'blackship' || screen === 'bluetext' || screen === 'invert') {
+      this.waves(0.34);
+    } else if (screen === 'intro') {
+      this.waves(0.04);
+    } else {
+      this.stopWaves();
+    }
+  }
+
+  componentDidUpdate() {
+    if (this._master) this._master.gain.value = this.props.muted ? 0 : (this.props.volume ?? 60) / 100;
+    const s = this.state.screen;
+    const decay = (s === 'q' || s === 'intro') && this.state.no > 0;
+    const c = s === 'snow' ? this.snowRef.current
+      : (s === 'blackship' || decay) ? this.noiseRef.current : null;
+    if (c && this._canvas !== c) { this._canvas = c; this.loop(c, s === 'snow' ? 1 : 0.55, decay); }
+    if (!c) { this._canvas = null; cancelAnimationFrame(this._raf); }
+  }
+  componentWillUnmount() {
+    clearInterval(this._t); clearTimeout(this._a); clearTimeout(this._s); cancelAnimationFrame(this._raf);
+    try { this.stopMorse(); this.stopBed(); if (this._ac) this._ac.close(); } catch (e) {}
+  }
+
+  loop(canvas, gain, sparse) {
+    cancelAnimationFrame(this._raf);
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width, h = canvas.height;
+    const img = ctx.createImageData(w, h);
+    const draw = () => {
+      if (this._canvas !== canvas) return;
+      const d = img.data;
+      if (sparse) {
+        // fine, scattered specks rather than a solid wall of static
+        d.fill(0);
+        const count = Math.floor(w * h * 0.055);
+        for (let k = 0; k < count; k++) {
+          const i = (Math.floor(Math.random() * w * h)) * 4;
+          const v = 140 + Math.random() * 115;
+          d[i] = d[i + 1] = d[i + 2] = v;
+          d[i + 3] = 255;
+        }
+      } else {
+        for (let i = 0; i < d.length; i += 4) {
+          const v = (Math.random() * 255) * gain;
+          d[i] = d[i + 1] = d[i + 2] = v;
+          d[i + 3] = 255;
+        }
+      }
+      ctx.putImageData(img, 0, 0);
+      this._raf = requestAnimationFrame(draw);
+    };
+    draw();
+  }
+
+  submit = () => {
+    const pass = this.props.password ?? 'signa';
+    if (this.state.pw.trim().toLowerCase() === String(pass).toLowerCase()) {
+      this.setState({ screen: 'intro', err: false });
+      this.scene('intro');
+      this.type(this.INTRO, null, 'type');
+    } else { this.sfx('error'); this.setState({ err: true }); }
+  };
+
+  begin = () => { this.setState({ screen: 'q', qi: 0, yes: 0, no: 0 }); this.scene('q'); this.type(this.QS[0]); };
+
+  ending() {
+    const threshold = this.props.blueThreshold ?? 5;
+    if (this.state.yes >= threshold) {
+      this.go('blueflash', 1250, () => {
+        this.setState({ screen: 'bluetext' });
+        this.scene('bluetext');
+        this.type(this.HOME, () => this.go('invert', 700, () => this.go('white')));
+      });
+    } else {
+      this.go('blackship');
+    }
+  }
+
+  finish(lastNo) {
+    if (lastNo) {
+      this.go('glitch', 900, () => {
+        this.setState({ screen: 'blacktext' });
+        this.scene('blacktext');
+        this.sfx('glitch');
+        const hold = Math.max((this._morseDur || 0) + 2, 6) * 1000;
+        this.type(this.FOG);
+        clearTimeout(this._s);
+        this._s = setTimeout(() => this.go('snow', 2600, () => this.go('blackout')), hold);
+      });
+    } else { this.ending(); }
+  }
+
+  answer(agree) {
+    const qi = this.state.qi;
+    const yes = this.state.yes + (agree ? 1 : 0);
+    const no = this.state.no + (agree ? 0 : 1);
+    const last = qi >= this.QS.length - 1;
+    this.setState({ yes, no }, () => {
+      if (last) { clearInterval(this._t); this.finish(!agree); return; }
+      this.setState({ qi: qi + 1 }, () => this.scene('q'));
+      this.type(this.QS[qi + 1]);
+    });
+  }
+
+  restart = () => {
+    clearInterval(this._t); clearTimeout(this._a); clearTimeout(this._s);
+    this.setState({ screen: 'login', pw: '', err: false, qi: 0, yes: 0, no: 0, typed: '', done: false });
+    this.scene('login');
+  };
+
+  renderVals() {
+    const s = this.state;
+    const n = s.no;
+    const shake = (count, speed) => {
+      if (count <= 0) return null;
+      const name = count >= 7 ? 'shakeXL' : count >= 5 ? 'shakeL' : count >= 3 ? 'shakeM' : 'shakeS';
+      const dur = Math.max(0.55 - count * 0.045, 0.16) / (speed || 1);
+      return { animation: name + ' ' + dur.toFixed(2) + 's steps(3,end) infinite' };
+    };
+    return {
+      isLogin: s.screen === 'login',
+      isLetter: s.screen === 'intro' || s.screen === 'q',
+      isQ: s.screen === 'q',
+      isGlitch: s.screen === 'glitch',
+      isBlackText: s.screen === 'blacktext',
+      isSnow: s.screen === 'snow',
+      isBlackout: s.screen === 'blackout',
+      isBlueFlash: s.screen === 'blueflash',
+      isBlueText: s.screen === 'bluetext',
+      isInvert: s.screen === 'invert',
+      isWhite: s.screen === 'white',
+      isBlackShip: s.screen === 'blackship',
+      typed: s.typed,
+      counter: String(s.qi + 1).padStart(2, '0') + ' / ' + String(this.QS.length).padStart(2, '0'),
+      showIntroBtn: s.screen === 'intro' && s.done,
+      showChoices: s.screen === 'q' && s.done,
+      pw: s.pw,
+      err: s.err,
+      snowRef: this.snowRef,
+      noiseRef: this.noiseRef,
+      decayOn: n > 0,
+      decayNoise: { position: 'absolute', inset: 0, width: '100%', height: '100%', mixBlendMode: 'screen', pointerEvents: 'none', opacity: Math.min(0.025 + n * 0.022, 0.2) },
+      decayLines: { position: 'absolute', inset: 0, pointerEvents: 'none', background: 'repeating-linear-gradient(0deg, rgba(0,0,0,' + Math.min(0.04 + n * 0.028, 0.22) + ') 0 1px, rgba(0,0,0,0) 1px 4px)' },
+      frameShake: Object.assign({ position: 'absolute', inset: 0 }, shake(n, 1)),
+      btnShakeA: Object.assign({ flex: 1 }, shake(Math.max(n - 1, 0), 1.25)),
+      btnShakeB: Object.assign({ flex: 1 }, shake(n, 1)),
+      onPw: (e) => { this.scene('login'); this.setState({ pw: e.target.value, err: false }); },
+      onKey: (e) => { if (e.key === 'Enter') this.submit(); },
+      submit: this.submit,
+      begin: this.begin,
+      agree: () => this.answer(true),
+      oppose: () => this.answer(false),
+      restart: this.restart
+    };
+  }
+}
+</script>
+</body>
+</html>
